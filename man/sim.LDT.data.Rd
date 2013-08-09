@@ -1,7 +1,7 @@
 \name{sim.LDT.data}
 \alias{sim.LDT.data}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Function to simulate data from sequentially randomized clinical trials
+\title{Function to simulate data from sequentially randomized clinical trials (Lunceford, Davidian and Tsiatis 2002)
 %%  ~~function to do ... ~~
 }
 \description{
@@ -10,17 +10,13 @@ This function generates a data set from sequentially randomized clinical trials 
 
 }
 \usage{
-sim.LDT.data(n, L, max.c, pi.r, pi.z, lambda, alpha, beta1, beta2)
+sim.LDT.data(n, max.c, pi.r, pi.z, lambda, alpha, beta1, beta2, L=.Machine$double.xmax)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{n}{
 %%     ~~Describe \code{n} here~~
 number of subjects assigned to A1
-}
-  \item{L}{
-%%     ~~Describe \code{L} here~~
-restricted survival time. Because of the limited follow-up time, restricted lifetime is considered. We only consider survival up to some time L, where L is smaller than the maximum follow-up time
 }
   \item{max.c}{
 %%     ~~Describe \code{c} here~~
@@ -32,7 +28,7 @@ the probability of response. Response status R is generated from Bernoulli(pi.r)
 }
   \item{pi.z}{
 %%     ~~Describe \code{pi.z} here~~
-the probability of being assigned to B2 among responders. The second-stage treatment indicator Z is generated from Bernoulli(pi.z) among responders (R=1). Z=1 if assigned to B2 at the second stage, and Z=0 if assigned to B1 at the second stage. For non-responders (R=0), Z=0
+the probability of being assigned to B2 among responders. The second-stage treatment indicator Z is generated from Bernoulli(pi.z) among responders (R=1). Z=0 if assigned to B1 at the second stage, and Z=1 if assigned to B2 at the second stage. For non-responders (R=0), Z=0
 }
   \item{lambda}{
 %%     ~~Describe \code{lambda} here~~
@@ -50,13 +46,15 @@ post-response survival time under B1, T*_11 is drawn from exponential(e^beta1)
 %%     ~~Describe \code{beta2} here~~
 post-response survival time under B2, T*_12 is drawn from exponential(e^(beta1+beta2*T*_11))
 }
+  \item{L}{restricted survival time. Default is .Machine$double.xmax, which is the largest double value of R. Set L to a numeric number smaller than the maximum follow-up time if restricted follow-up time up to L is considered.
+}
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
 In sequentially randomized designs, there could be more than two therapies available at each stage. For simplicity, and to maintain similarity to the most common sequentially randomized clinical trials, a simple two-stage randomization design allowing two treatment options at each stage is used in the current version of the package. In detail, patients are initially randomized to either A1 or A2 at the first stage. Based on their response status, they are then randomized to either B1 or B2 at the second stage. Therefore, there are a total of four dynamic treatment regimes (DTRs): A1B1, A1B2, A2B1, and A2B2.
 }
 \value{
-The function returns a data set with columns: R, Z, V, and delta.
+The function returns a data set with columns: R, Z, U, and delta.
 %%  ~Describe the value returned
 %%  If it is a LIST, use
 %%  \item{comp1 }{Description of 'comp1'}
@@ -64,7 +62,7 @@ The function returns a data set with columns: R, Z, V, and delta.
 %% ...
 \item{R}{response status, R=1 for responders, and R=0 for non-responders}
 \item{Z}{second-stage indicator, Z=0 if assigned to B1, and Z=1 if assigned to B2}
-\item{V}{observed survival time, V is death time if delta=1, and V is censoring time if delta=0}
+\item{U}{observed survival time, U is death time if delta=1, and U is censoring time if delta=0}
 \item{delta}{censoring indicator, delta=1 for died, and delta=0 for censored}
 }
 \references{
@@ -79,25 +77,31 @@ The data frame generated from \code{\link{sim.LDT.data}} is the same as the inpu
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-\code{\link{DTR}}, \code{\link{LDT.estimator}}, \code{\link{LDT.mean.estimator}}
+\code{\link{DTR}}, \code{\link{LDT.estimator}}, \code{\link{LDT.mean.estimator}}, \code{\link{DTR.Wald.test}}, \code{\link{DTR.surv.plot}}
 }
 \examples{
 require(DTR)
   
 #-------Example function usage-----------
-n<-500
-L<-1.5
-max.c<-2.5
-pi.r<-0.5
-pi.z<-0.5
-lambda<-1.33
-alpha<-6.67
-beta1<-0.29
-beta2<--0.67
+n <- 500
+L <- 1.5
+max.c <- 2.5
+pi.r <- 0.5
+pi.z <- 0.5
+lambda <- 1.33
+alpha <- 6.67
+beta1 <- 0.29
+beta2 <- -0.67
 
-# Generate data from SRD
+# Generate A1 data from SRD
 set.seed(123)  # Set a seed to reproduce the same data every time running the following command
-data<-sim.LDT.data(n,L,max.c,pi.r,pi.z,lambda,alpha,beta1,beta2)
+data <- sim.LDT.data(n,max.c,pi.r,pi.z,lambda,alpha,beta1,beta2,L)
+
+# Generate full data from SRD
+set.seed(123)
+data.A1 <- sim.LDT.data(n,max.c,pi.r,pi.z,lambda,alpha,beta1,beta2,L)
+data.A2 <- sim.LDT.data(n,max.c,pi.r,pi.z,lambda,alpha,beta1,beta2,L)
+fdata <- cbind(X=c(rep(0,n), rep(1,n)), rbind(data.A1, data.A2)) # X=0 for A1; X=1 for A2
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

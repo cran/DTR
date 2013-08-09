@@ -9,21 +9,22 @@
 The function provides the mean restricted survival estimates and their estimated standard errors for the dynamic treatment regimes (DTRs) based on the data from sequentially randomized designs as proposed in Lunceford, Davidian and Tsiatis (2002). Because different assignments at the first stage are independent to each other,  the function only calculates estimates for one of the assignments at the first stage. For example, if there are two first-stage therapies A1 and A2 available, the function only calculates estimates for one of the two arms (e.g. A1).
 }
 \usage{
-LDT.mean.estimator(data, L)
+LDT.mean.estimator(data, L=.Machine$double.xmax)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{data}{
 %%     ~~Describe \code{data} here~~
-a data frame (R, Z, V, delta) representing the data for one of the first-stage assignments from sequentially randomized designs. \cr
+a data frame (R, Z, U, delta) representing the data for one of the first-stage assignments from sequentially randomized designs. \cr
 R: response status, R=1 for responders, and R=0 for non-responders \cr
 Z: second-stage indicator, Z=0 if assigned to B1, and Z=1 if assigned to B2 \cr
-V: observed survival time, V is death time if delta=1, and V is censoring time if delta=0 \cr
+U: observed survival time, U is death time if delta=1, and U is censoring time if delta=0 \cr
 delta: censoring indicator, delta=1 for died, and delta=0 for censored \cr
 }
   \item{L}{
 %%     ~~Describe \code{t} here~~
-restricted survival time. Because of the limited follow-up time, restricted lifetime is considered. We only consider survival up to some time L, where L is smaller than the maximum follow-up time
+restricted survival time. Default is .Machine$double.xmax, which is the largest double value of R. Set L to a numeric number smaller than the maximum follow-up time if restricted follow-up time up to L is considered.
+
 }
 }
 \details{
@@ -37,9 +38,10 @@ The function returns mean restricted survival estimates and their standard error
 %%  \item{comp1 }{Description of 'comp1'}
 %%  \item{comp2 }{Description of 'comp2'}
 \item{MEAN1}{LDT mean restricted survival estimates for A1B1}
-\item{MSE1}{estimated standard error for MEAN1}
 \item{MEAN2}{LDT mean restricted survival estimates for A1B2}
+\item{MSE1}{estimated standard error for MEAN1}
 \item{MSE2}{estimated standard error for MEAN2}
+\item{MCOV12}{estimated covariance for MEAN1 and MEAN2}
 %% ...
 }
 \references{
@@ -55,25 +57,25 @@ The data frame generated from \code{\link{sim.LDT.data}} is the same as the inpu
 
 \seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
-\code{\link{DTR}}, \code{\link{sim.LDT.data}}, \code{\link{LDT.estimator}}
+\code{\link{DTR}}, \code{\link{sim.LDT.data}}, \code{\link{LDT.estimator}}, \code{\link{DTR.Wald.test}}
 }
 \examples{
 require(DTR)
   
 #-------Example function usage-----------
-n<-500
-L<-1.5
-max.c<-2.5
-pi.r<-0.5
-pi.z<-0.5
-lambda<-1.33
-alpha<-6.67
-beta1<-0.29
-beta2<--0.67
+n <- 500
+L <- 1.5
+max.c <- 2.5
+pi.r <- 0.5
+pi.z <- 0.5
+lambda <- 1.33
+alpha <- 6.67
+beta1 <- 0.29
+beta2 <- -0.67
 
-# Generate data from SRD
+# Generate A1 data from SRD
 set.seed(123)  # Set a seed to reproduce the same data every time running the following command
-data<-sim.LDT.data(n,L,max.c,pi.r,pi.z,lambda,alpha,beta1,beta2)
+data <- sim.LDT.data(n,max.c,pi.r,pi.z,lambda,alpha,beta1,beta2,L)
 
 # Calculate LTD restricted mean estimates
 LDT.mean.estimator(data, L=1.5)
