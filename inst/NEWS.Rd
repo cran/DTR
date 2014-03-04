@@ -24,4 +24,32 @@
     \item New function DTR.Logrank.test.R added to compare dynamic treatment regimes (DTRs) using weighted logrank tests
 }
 }
+\section{Changes in version 1.3}{
+  \itemize{
+    \item The function sim.LDT.data was renamed to simLDTdata  
+    \item The function LDT.estimator.R was replaced by the function LDTestimate.R
+    \item The function LDTestimate.R returns an object of class DTR containing all the survival estimates and estimated standard errors at observed event times
+    \item The function LDT.mean.estimator.R was deleted
+    \item The function sim.WRSE.data was renamed to simWRSEdata
+    \item The function WRSE.estimator.R was replaced by the function WRSEestimate.R
+    \item The function WRSEestimate.R returns an object of class DTR containing all the survival estimates and estimated standard errors at observed event times    
+    \item The S3 functions print.DTR, summary.DTR, print.summary.DTR, and plot.DTR were added
+    \item The function DTR.Wald.test.R was replaced by the function contrast.wald.R
+    \item The function contrast.wald.R implements the function wald.test() from the package aod to perform wald-type tests
+    \item The function sim.CHR.data was renamed to simCHRdata
+    \item The function CHR.estimator.R was replaced by the function CHRestimate.R
+    \item The function CHRestimate.R returns an object of class CHR containing all the cumulative hazard ratio estimates and estimated standard errors at observed event times
+    \item The S3 functions print.CHR, summary.CHR, print.summary.CHR, and plot.CHR were added
+    \item The function CHR.Wald.test.R was replaced by the function contrast.chr.R 
+    \item The function contrast.chr.R implements the function wald.test() from the package aod to perform wald-type tests using the CHR estimates and their variance/covariance estimates
+    \item The function sim.Cox.data was renamed to simPHdata
+    \item The function DTR.Cox.test was replaced by two separate functions PHfit.R and contrast.ph.R
+    \item The function PHfit.R returns an object of class coxph containing the proportional hazard model fit
+    \item The function contrast.ph.R implements the function wald.test() from the package aod to perform wald-type tests based on the returned coefficient and variance/covariance estimated from PHfit()
+    \item The function sim.Logrank.data.R was renamed to simLRdata
+    \item The function DTR.Logrank.test.R was replaced by the function contrast.logrank.R
+    \item The data sets LDTdata, WRSEdata, CHRdata, PHdata, and LRdata were added to data folder
+    \item datalist was added to data folder
+}
+}
 

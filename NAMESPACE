@@ -1,1 +1,8 @@
 exportPattern("^[[:alpha:]]+")
+
+import(survival)
+import(ggplot2)
+import(grid)
+import(aod)
+import(proto)
+
