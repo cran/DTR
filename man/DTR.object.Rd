@@ -17,6 +17,15 @@ number of observations for each regime
 \item{events}{
 number of events for each regime
 }
+\item{censorDTR}{
+dynamic treatment regimes corresponding to censoring times
+}
+\item{censortime}{
+censoring times
+}
+\item{censorsurv}{
+the survival estimate corresponding to each censoring time (censortime) and dynamic treatment regime (censorDTR)
+}
 \item{time}{
 event times
 }

@@ -13,7 +13,7 @@ LDTestimate(data, L = .Machine$double.xmax)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{data}{
-a data frame (X, R, Z, U, delta) representing the data from a two stage randomization design with therapies A1 and A2 available at the first stage, and B1 and B2 available at the second stage. \cr
+a data frame (X, R, Z, U, delta) representing the data from a two-stage randomization design with therapies A1 and A2 available at the first stage, and B1 and B2 available at the second stage. \cr
 X: treatment arm, X=0 for A1, and X=1 for A2\cr
 R: response status, R=1 for responders, and R=0 for non-responders \cr
 Z: second-stage indicator, Z=0 if assigned to B1, and Z=1 if assigned to B2 \cr
@@ -46,11 +46,10 @@ Lunceford JK, Davidian M, Tsiatis AA: Estimation of survival distributions of tr
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-require(DTR)
-
+\dontrun{
 data("LDTdata")
 est <- LDTestimate(data=LDTdata)
-est
+est}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

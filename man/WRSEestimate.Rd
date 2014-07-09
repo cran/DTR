@@ -15,7 +15,7 @@ WRSEestimate(data)
 \arguments{
   \item{data}{
 %%     ~~Describe \code{data} here~~
-a data frame (X, TR, R, Z, U, delta) representing the data from sequentially randomized designs with therapies A1 and A2 available at the first stage, and B1 and B2 available at the second stage. \cr
+a data frame (X, TR, R, Z, U, delta) representing the data from a two-stage randomized designs with therapies A1 and A2 available at the first stage, and B1 and B2 available at the second stage. \cr
 X: treatment arm, X=0 for A1, and X=1 for A2\cr
 TR: the time to response for responders (R=1) \cr
 R: response status, R=1 for responders, and R=0 for non-responders \cr
@@ -40,11 +40,10 @@ Guo X, Tsiatis AA: A weighted risk set estimator for survival distributions in t
 \code{\link{summary.DTR}}, \code{\link{print.summary.DTR}}, \code{\link{plot.DTR}}
 }
 \examples{
-require(DTR)
-
+\dontrun{
 data("WRSEdata")
 est <- WRSEestimate(data=WRSEdata)
-est
+est}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

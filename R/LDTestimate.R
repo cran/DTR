@@ -133,7 +133,7 @@ LDTestimate <- function(data, # A data frame representing the data from sequenti
   #Run sub.LDTestimate to obtain the defined estimates A2 arm
   cat ("Estimating for A2 arm... \n")
   est2 <- sub.LDTestimate(pdata=data[which(data$X==1),],t,L)
-
+  
   #Return class
   results <- list(Call=match.call(),
                   DTR=c("A1B1", "A1B2", "A2B1", "A2B2"),
@@ -145,6 +145,22 @@ LDTestimate <- function(data, # A data frame representing the data from sequenti
                            sum(data$delta[which((data$X==0 & data$R==0) | (data$X==0 & data$R==1 & data$Z==1))]),
                            sum(data$delta[which((data$X==1 & data$R==0) | (data$X==1 & data$R==1 & data$Z==0))]),
                            sum(data$delta[which((data$X==1 & data$R==0) | (data$X==1 & data$R==1 & data$Z==1))])),
+                  censorDTR=c(rep("A1B1", length(which((data$X==0 & data$R==1 & data$Z==0 & data$delta==0) | (data$X==0 & data$R==0 & data$delta==0)))),
+                              rep("A1B2", length(which((data$X==0 & data$R==1 & data$Z==1 & data$delta==0) | (data$X==0 & data$R==0 & data$delta==0)))),
+                              rep("A2B1", length(which((data$X==1 & data$R==1 & data$Z==0 & data$delta==0) | (data$X==1 & data$R==0 & data$delta==0)))),
+                              rep("A2B2", length(which((data$X==1 & data$R==1 & data$Z==1 & data$delta==0) | (data$X==1 & data$R==0 & data$delta==0))))),
+                  censortime=c(data$U[which((data$X==0 & data$R==1 & data$Z==0 & data$delta==0) | (data$X==0 & data$R==0 & data$delta==0))],
+                               data$U[which((data$X==0 & data$R==1 & data$Z==1 & data$delta==0) | (data$X==0 & data$R==0 & data$delta==0))],
+                               data$U[which((data$X==1 & data$R==1 & data$Z==0 & data$delta==0) | (data$X==1 & data$R==0 & data$delta==0))],
+                               data$U[which((data$X==1 & data$R==1 & data$Z==1 & data$delta==0) | (data$X==1 & data$R==0 & data$delta==0))]),
+                  censorsurv=c(apply(as.array(data$U[which((data$X==0 & data$R==1 & data$Z==0 & data$delta==0) | (data$X==0 & data$R==0 & data$delta==0))]), 1, 
+                                     function(x) { if(x<min(est1$t)) 1 else est1$SURV1[which(abs(est1$t-x)==min(abs(est1$t-x)[which(est1$t<=x)]))] }),
+                               apply(as.array(data$U[which((data$X==0 & data$R==1 & data$Z==1 & data$delta==0) | (data$X==0 & data$R==0 & data$delta==0))]), 1, 
+                                     function(x) { if(x<min(est1$t)) 1 else est1$SURV2[which(abs(est1$t-x)==min(abs(est1$t-x)[which(est1$t<=x)]))] }),
+                               apply(as.array(data$U[which((data$X==1 & data$R==1 & data$Z==0 & data$delta==0) | (data$X==1 & data$R==0 & data$delta==0))]), 1, 
+                                     function(x) { if(x<min(est2$t)) 1 else est2$SURV1[which(abs(est2$t-x)==min(abs(est2$t-x)[which(est2$t<=x)]))] }),
+                               apply(as.array(data$U[which((data$X==1 & data$R==1 & data$Z==1 & data$delta==0) | (data$X==1 & data$R==0 & data$delta==0))]), 1, 
+                                     function(x) { if(x<min(est2$t)) 1 else est2$SURV2[which(abs(est2$t-x)==min(abs(est2$t-x)[which(est2$t<=x)]))] })),
                   time=t, n.risk=n.risk, n.event=n.event,
                   SURV11=est1$SURV1, SURV12=est1$SURV2, SURV21=est2$SURV1, SURV22=est2$SURV2,
                   SE11=est1$SE1, SE12=est1$SE2, COV1112=est1$COV12,

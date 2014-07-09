@@ -52,4 +52,19 @@
     \item datalist was added to data folder
 }
 }
-
+\section{Changes in version 1.4}{
+  \itemize{
+    \item The function contrast.wald was renamed to contrast_wald  
+    \item The function contrast.chr was renamed to contrast_chr
+    \item The function contrast.logrank was renamed to contrast_logrank
+    \item The function contrast.ph was renamed to contrast_ph
+    \item An input option covar was added to the function PHfit to allow user to specify the covariates to be adjusted
+    \item An input option covar was added to the function CHRestimate to allow user to specify the covariates to be adjusted
+    \item An input option censored was added to the function plot.DTR for plotting censoring ticks
+}
+}
+\section{Changes in version 1.5}{
+  \itemize{
+    \item A bug in the function CHRestimate was fixed  
+}
+}

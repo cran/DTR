@@ -26,7 +26,7 @@ require(survival)
 ### code chunk number 2: chunkLogrank
 ###################################################
 
-contrast.logrank <- function(data # A complete data frame representing the data for two-stage randomization designs
+contrast_logrank <- function(data # A complete data frame representing the data for two-stage randomization designs
                                # data = data frame {X, TR, R, Z, U, delta}
 ) {
  

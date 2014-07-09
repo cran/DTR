@@ -109,6 +109,9 @@ simPHdata<-function(n, # Number of subjects in the clinical trial
   #delta=0 for censoring and delta=1 for event
   delta<-as.numeric(T<C)
   
+  #Set time to response to be 0 for non-responders
+  TR[which(R==0)] <- 0
+  
   #Combine data
   data<-data.frame(X,TR,R,Z,U,delta,V)
   return(data)

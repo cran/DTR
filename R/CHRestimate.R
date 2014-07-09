@@ -159,11 +159,12 @@ updateBeta <- function(beta, # Current coefficient(s) for covariate(s)
 }
 
 
-CHRestimate <- function(data # A complete data frame representing the data for two-stage randomization designs
+CHRestimate <- function(data, # A complete data frame representing the data for two-stage randomization designs
                         # data = data frame {X, R, Z, U, delta, V}
                         # V represents covariates
                         # There could be one covariate, or more than one covariates
                         # The function does not allow the absence of covariates
+                        covar=names(data)[!names(data) %in% c("X", "R", "Z", "U", "delta")] # Covariate list
 ) {
    
   #Retrieve data
@@ -205,19 +206,21 @@ CHRestimate <- function(data # A complete data frame representing the data for t
   w21 <- X*(1-R)/pi.x + X*R*(1-Z)/(pi.x*(1-pi.z1))
   w22 <- X*(1-R)/pi.x + X*R*Z/(pi.x*pi.z1)
   
-  #Retrive covariates
-  V <- as.matrix(data[, ! names(data) %in% c("X", "R", "Z", "U", "delta")])
-  
-  #Define results
-  est <- lest <- NULL
-  
   #################################################
   #################################################
   #If no covariates: ERROR
   #################################################
   #################################################
   
-  if(NCOL(V)==0) stop("Covariates can not be empty")  
+  if(length(covar)==0) { stop("Covariate(s) can not be empty") } else {
+    
+    if(FALSE %in% (covar %in% names(data))) { stop("Covariate(s) can not be found in the data") 
+    } else { V <- as.matrix(data[, names(data) %in% covar]) }
+ 
+  }
+  
+  #Define results
+  est <- lest <- NULL
   
   #################################################
   #################################################
@@ -227,7 +230,7 @@ CHRestimate <- function(data # A complete data frame representing the data for t
   if(NCOL(V)==1) { 
     
     #Obtain the inital beta estimates
-    beta <- as.numeric(coxph(Surv(U, delta)~., data=data[, ! names(data) %in% c("X", "R", "Z")])$coef)
+    beta <- as.numeric(coxph(Surv(U, delta)~., data=data[, names(data) %in% c("U", "delta", covar)])$coef)
     
     #Solve for beta using Newton-Raphson method
     cat("Calling for updateBeta() function to solve for coefficients... \n")
@@ -419,7 +422,7 @@ CHRestimate <- function(data # A complete data frame representing the data for t
   if(NCOL(V)>1) { 
     
     #Obtain the inital beta estimates
-    beta <- as.numeric(coxph(Surv(U, delta)~., data=data[, ! names(data) %in% c("X", "R", "Z")])$coef)
+    beta <- as.numeric(coxph(Surv(U, delta)~., data=data[, names(data) %in% c("U", "delta", covar)])$coef)
     
     #Solve for beta using Newton-Raphson method
     cat("Calling for updateBeta() function to solve for coefficient(s)...\n")

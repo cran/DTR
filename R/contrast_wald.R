@@ -9,7 +9,7 @@ require(aod)
 ### code chunk number 2: chunkfunction
 ###################################################
 
-contrast.wald <- function(est,
+contrast_wald <- function(est,
                           t=quantile(est$time, 0.75) # A time of interest for comparison, optional, default is the 75th percentile of time
 ) {
   

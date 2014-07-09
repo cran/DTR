@@ -2,7 +2,7 @@ exportPattern("^[[:alpha:]]+")
 
 import(survival)
 import(ggplot2)
-import(grid)
+import(gridExtra)
 import(aod)
 import(proto)
 

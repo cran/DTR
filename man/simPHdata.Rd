@@ -85,12 +85,10 @@ Tang X, Wahed AS: Comparison of treatment regimes with adjustment for auxiliary 
 Set a seed right before \code{\link{simPHdata}} will help reproduce the same data.\cr
 }
 \seealso{
-\code{\link{PHfit}}, \code{\link{contrast.ph}}
+\code{\link{PHfit}}, \code{\link{contrast_ph}}
 }
 \examples{
 
-require(DTR)
-  
 #-------Example function usage-----------
 n <- 400
 pi.x <- 0.5

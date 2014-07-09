@@ -30,12 +30,9 @@ The function returns an object of class \code{summary.CHR}. \cr
 \code{\link{print.summary.CHR}}, \code{\link{plot.CHR}} 
 }
 \examples{
-require(DTR)
-
-data("CHRdata")
-
 \dontrun{
-est <- CHRestimate(data=CHRdata)
+data("CHRdata")
+est <- CHRestimate(data=CHRdata, covar="V1")
 summary(est, log.CHR=TRUE)}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

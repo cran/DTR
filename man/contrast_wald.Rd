@@ -1,19 +1,19 @@
-\name{contrast.chr}
-\alias{contrast.chr}
+\name{contrast_wald}
+\alias{contrast_wald}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Function to compare dynamic treatment regimes (DTRs) based on cumulative hazard ratios (CHRs)
+Function to compare dynamic treatment regimes (DTRs) using Wald-type tests
 }
 \description{
-This function compares the cumulative hazard functions of dynamic treatment regimes (DTRs) from sequentially randomized clinical trials by calculating the natural logarithms of cumulative hazard ratios (CHRs) and performing the Wald-type tests based on natural logarithms of CHRs as proposed in Tang and Wahed (2013) [Epub ahead of print].
+This function compares the survival estimates at specific time point among dynamic treatment regimes (DTRs) using the Wald-type tests.
 }
 \usage{
-contrast.chr(est, t = quantile(est$time, 0.75))
+contrast_wald(est, t = quantile(est$time, 0.75))
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
 \item{est}{
-the result of a call to the \code{\link{CHRestimate}} function
+the result of a call to the \code{\link{LDTestimate}} function or \code{\link{WRSEestimate}} function
 }
 \item{t}{
 a time point of interest. For example, t=5 for the comparisons of survival estimates at 5 years among DTRs. Default t is set to be the 75th percentile of the observed time (i.e. 75th percentile of U).
@@ -32,19 +32,24 @@ The function returns a data frame with four columns: H0, test statistic, df, and
 \item{p}{the resulting p-value}
 }
 \references{
-Tang X, Wahed AS: Cumulative hazard ratio estimation for treatment regimes in sequentially randomized clinical trials. Statistics in Biosciences, 2013 [Epub ahead of print]
+Lunceford JK, Davidian M, Tsiatis AA: Estimation of survival distributions of treatment policies in two-stage randomization designs in clinical trials. Biometrics 58:48-57, 2002 \cr
+Guo X, Tsiatis AA: A weighted risk set estimator for survival distributions in two-stage randomization designs with censored survival data. Int. J. Biostatistics 1:1-15, 2005
 }
 \seealso{
-\code{\link{CHRestimate}},  \code{\link{CHR.object}}
+\code{\link{LDTestimate}},  \code{\link{WRSEestimate}}, \code{\link{DTR.object}}
 }
 \examples{
-require(DTR)
-
-data("CHRdata")
-
 \dontrun{
-est <- CHRestimate(data=CHRdata)
-contrast.chr(est, t=1.5)}
+# LDT estimates
+data("LDTdata")
+est <- LDTestimate(data=LDTdata)
+contrast_wald(est, t=1)
+
+# WRSE estimates
+data("WRSEdata")
+est <- WRSEestimate(data=WRSEdata)
+contrast_wald(est, t=300)
+}
 }
 \keyword{survival analysis}
 \keyword{sequentially randomized clinical trial}

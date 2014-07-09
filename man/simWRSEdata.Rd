@@ -71,9 +71,7 @@ Set a seed right before \code{\link{simWRSEdata}} will help reproduce the same d
 \code{\link{WRSEestimate}}
 }
 \examples{
-
-require(DTR)
-  
+ 
 #-------Example function usage-----------
 n <- 100
 max.c <- 3.5*365 

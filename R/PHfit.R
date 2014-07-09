@@ -15,10 +15,11 @@ require(survival)
 ### code chunk number 2: chunkCox
 ###################################################
 
-PHfit <- function(data # A complete data frame representing the data for two-stage randomization designs
+PHfit <- function(data, # A complete data frame representing the data for two-stage randomization designs
                         # data = data frame {X, TR, R, Z, U, delta, V}
                         # V represents covariates
                         # There could be no covariate, one covariate, and more than one covariates
+                  covar=NULL # Covariate list
 ) {
  
   #Retrieve data
@@ -38,21 +39,18 @@ PHfit <- function(data # A complete data frame representing the data for two-sta
   if (is.null(U)) stop("U can not be empty")  
   if (is.null(delta)) stop("delta can not be empty") 
   
-  #Retrive covariates
-  V <- data[, ! names(data) %in% c("X", "TR", "R", "Z", "U", "delta")]
-  
-  if(NCOL(V)==0) {
+  if(is.null(covar)) {
     
     #Format data
     data.model <- data.frame(
-      t.start = c(rep(0, n), TR[which(TR<=U)]),
-      t.end = c(U[which(TR>U)], TR[which(TR<=U)], U[which(TR<=U)]),
-      t.delta = c(delta[which(TR>U)], rep(0, length(which(TR<=U))), delta[which(TR<=U)]),
-      V.X = c(X[which(TR>U)], X[which(TR<=U)], X[which(TR<=U)]),
-      V.R = c(rep(0, n), rep(1, length(which(TR<=U)))),
-      V.XR = c(rep(0, n), X[which(TR<=U)]),
-      V.RZ = c(rep(0, n), Z[which(TR<=U)]),
-      V.XRZ = c(rep(0, n), X[which(TR<=U)]*Z[which(TR<=U)])
+      t.start = c(rep(0, n), TR[which(TR<=U & R==1)]),
+      t.end = c(U[which(TR>U | R==0)], TR[which(TR<=U & R==1)], U[which(TR<=U & R==1)]),
+      t.delta = c(delta[which(TR>U | R==0)], rep(0, length(which(TR<=U & R==1))), delta[which(TR<=U & R==1)]),
+      V.X = c(X[which(TR>U | R==0)], X[which(TR<=U & R==1)], X[which(TR<=U & R==1)]),
+      V.R = c(rep(0, n), rep(1, length(which(TR<=U & R==1)))),
+      V.XR = c(rep(0, n), X[which(TR<=U & R==1)]),
+      V.RZ = c(rep(0, n), Z[which(TR<=U & R==1)]),
+      V.XRZ = c(rep(0, n), X[which(TR<=U & R==1)]*Z[which(TR<=U & R==1)])
     )
     
     #Get rid of t.start=t.end=0
@@ -67,67 +65,69 @@ PHfit <- function(data # A complete data frame representing the data for two-sta
     #Change the argument of object
     fit$call <- "coxph(Surv(U, delta)~ X + R + XR + RZ + XRZ)" 
     
-  } 
+  } else {
+    
+    if(FALSE %in% (covar %in% names(data))) { stop("Covariate(s) can not be found in the data") 
+    } else { V <- data[, names(data) %in% covar] }
+     
+    if(NCOL(V)==1) {
  
-  if(NCOL(V)==1) {
- 
-    #Format data
-    data.model <- data.frame(
-      t.start = c(rep(0, n), TR[which(TR<=U)]),
-      t.end = c(U[which(TR>U)], TR[which(TR<=U)], U[which(TR<=U)]),
-      t.delta = c(delta[which(TR>U)], rep(0, length(which(TR<=U))), delta[which(TR<=U)]), 
-      V.X = c(X[which(TR>U)], X[which(TR<=U)], X[which(TR<=U)]),
-      V.R = c(rep(0, n), rep(1, length(which(TR<=U)))),
-      V.XR = c(rep(0, n), X[which(TR<=U)]),
-      V.RZ = c(rep(0, n), Z[which(TR<=U)]),
-      V.XRZ = c(rep(0, n), X[which(TR<=U)]*Z[which(TR<=U)]), 
-      V.V = c(V[which(TR>U)], V[which(TR<=U)], V[which(TR<=U)])
-    )
+      #Format data
+      data.model <- data.frame(
+        t.start = c(rep(0, n), TR[which(TR<=U & R==1)]),
+        t.end = c(U[which(TR>U | R==0)], TR[which(TR<=U & R==1)], U[which(TR<=U & R==1)]),
+        t.delta = c(delta[which(TR>U | R==0)], rep(0, length(which(TR<=U & R==1))), delta[which(TR<=U & R==1)]),
+        V.X = c(X[which(TR>U | R==0)], X[which(TR<=U & R==1)], X[which(TR<=U & R==1)]),
+        V.R = c(rep(0, n), rep(1, length(which(TR<=U & R==1)))),
+        V.XR = c(rep(0, n), X[which(TR<=U & R==1)]),
+        V.RZ = c(rep(0, n), Z[which(TR<=U & R==1)]),
+        V.XRZ = c(rep(0, n), X[which(TR<=U & R==1)]*Z[which(TR<=U & R==1)]), 
+        V.V = c(V[which(TR>U | R==0)], V[which(TR<=U & R==1)], V[which(TR<=U & R==1)])
+      )
   
-    #Get rid of t.start=t.end=0
-    if(length(which(data.model$t.end==0))>0) data.model <- data.model[which(data.model$t.end!=0),]
+      #Get rid of t.start=t.end=0
+      if(length(which(data.model$t.end==0))>0) data.model <- data.model[which(data.model$t.end!=0),]
     
-    #Change the names
-    names(data.model) <- c("start", "end", "delta", "X", "R", "XR", "RZ", "XRZ", 
-                           names(data)[! names(data) %in% c("X", "TR", "R", "Z", "U", "delta")])
+      #Change the names
+      names(data.model) <- c("start", "end", "delta", "X", "R", "XR", "RZ", "XRZ", covar)
     
-    #Fit the Cox proportional hazard model
-    fit <- coxph(Surv(start, end, delta)~., data=data.model)
+      #Fit the Cox proportional hazard model
+      fit <- coxph(Surv(start, end, delta)~., data=data.model)
     
-    #Change the call
-    fit$call <- paste("coxph(Surv(U, delta) ~ X + R + XR + RZ + XRZ + ", 
-                      names(data)[! names(data) %in% c("X", "TR", "R", "Z", "U", "delta")], ")", sep="")
+      #Change the call
+      fit$call <- paste("coxph(Surv(U, delta) ~ X + R + XR + RZ + XRZ + ", covar, ")", sep="")
   
-  }
+    }
   
-  if(NCOL(V)>1) {
+    if(NCOL(V)>1) {
     
-    #Format data
-    data.model <- data.frame(
-      t.start = c(rep(0, n), TR[which(TR<=U)]),
-      t.end = c(U[which(TR>U)], TR[which(TR<=U)], U[which(TR<=U)]),
-      t.delta = c(delta[which(TR>U)], rep(0, length(which(TR<=U))), delta[which(TR<=U)]),
-      V.X = c(X[which(TR>U)], X[which(TR<=U)], X[which(TR<=U)]),
-      V.R = c(rep(0, n), rep(1, length(which(TR<=U)))),
-      V.XR = c(rep(0, n), X[which(TR<=U)]),
-      V.RZ = c(rep(0, n), Z[which(TR<=U)]),
-      V.XRZ = c(rep(0, n), X[which(TR<=U)]*Z[which(TR<=U)]),  
-      rbind(V[which(TR>U),], V[which(TR<=U),], V[which(TR<=U),])
-    )
+      #Format data
+      data.model <- data.frame(
+        t.start = c(rep(0, n), TR[which(TR<=U & R==1)]),
+        t.end = c(U[which(TR>U | R==0)], TR[which(TR<=U & R==1)], U[which(TR<=U & R==1)]),
+        t.delta = c(delta[which(TR>U | R==0)], rep(0, length(which(TR<=U & R==1))), delta[which(TR<=U & R==1)]),
+        V.X = c(X[which(TR>U | R==0)], X[which(TR<=U & R==1)], X[which(TR<=U & R==1)]),
+        V.R = c(rep(0, n), rep(1, length(which(TR<=U & R==1)))),
+        V.XR = c(rep(0, n), X[which(TR<=U & R==1)]),
+        V.RZ = c(rep(0, n), Z[which(TR<=U & R==1)]),
+        V.XRZ = c(rep(0, n), X[which(TR<=U & R==1)]*Z[which(TR<=U & R==1)]),  
+        rbind(V[which(TR>U | R==0),], V[which(TR<=U & R==1),], V[which(TR<=U & R==1),])
+      )
     
-    #Get rid of t.start=t.end=0
-    if(length(which(data.model$t.end==0))>0) data.model <- data.model[which(data.model$t.end!=0),]
+      #Get rid of t.start=t.end=0
+      if(length(which(data.model$t.end==0))>0) data.model <- data.model[which(data.model$t.end!=0),]
     
-    #Change the names
-    names(data.model) <- c("start", "end", "delta", "X", "R", "XR", "RZ", "XRZ", 
-                           names(data)[! names(data) %in% c("X", "TR", "R", "Z", "U", "delta")])
+      #Change the names
+      names(data.model) <- c("start", "end", "delta", "X", "R", "XR", "RZ", "XRZ", covar)
     
-    #Fit the Cox proportional hazard model
-    fit <- coxph(Surv(start, end, delta)~., data=data.model)
+      #Fit the Cox proportional hazard model
+      fit <- coxph(Surv(start, end, delta)~., data=data.model)
     
-    #Change the call
-    fit$call <- paste("coxph(Surv(U, delta) ~ X + R + XR + RZ + XRZ + ", 
-                      paste(names(data)[! names(data) %in% c("X", "TR", "R", "Z", "U", "delta")], collapse=" + "), ")", sep= "")
+      #Change the call
+      fit$call <- paste("coxph(Surv(U, delta) ~ X + R + XR + RZ + XRZ + ", 
+                      paste(covar, collapse=" + "), ")", sep= "")
+    
+    }
     
   }  
     

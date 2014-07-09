@@ -114,8 +114,6 @@ Set a seed right before \code{\link{simCHRdata}} will help reproduce the same da
 }
 \examples{
 
-require(DTR)
-
 #-------Example function usage-----------
 n <- 200
 max.c <- 5

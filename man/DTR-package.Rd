@@ -6,9 +6,9 @@
 Estimation and comparison of dynamic treatment regimes (DTRs) from sequentially randomized clinical trials
 }
 \description{
-This is a package for the estimation and comparison of survival distributions of dynamic treatment regimes (DTRs) from sequentially randomized clinical trials. In a sequentially randomized design, patients are initially randomized to one of the first-stage therapies. Based on their responses to the first-stage therapy, they are then randomized to one of the second-stage therapies. The second-stage therapy could be a rescue therapy if the response is not favorable, or maintenance therapy if favorable response is achieved. There are treatment sequences resulted from such designs: first-stage therapy -> response -> second-stage therapy. The treatment sequences are also referred to as dynamic treatment regimes (DTRs) or adaptive treatment strategies in the literature. \cr
+This is a package for the estimation and comparison of survival distributions of dynamic treatment regimes (DTRs) from sequentially randomized clinical trials. In a sequentially randomized design, patients are initially randomized to one of the first-stage therapies. Based on their responses to the first-stage therapy, they are then randomized to one of the second-stage therapies. The second-stage therapy could be a rescue therapy if the response is not favorable, or maintenance therapy if favorable response is achieved. There are treatment sequences resulted from such designs: first-stage therapy -> response -> second-stage therapy. The treatment sequences are also referred to as dynamic treatment regimes (DTRs) or adaptive treatment strategies or treatment policies in the literature. \cr
 The estimation functions include \code{\link{LDTestimate}}, \code{\link{WRSEestimate}}, and \code{\link{CHRestimate}}. \cr
-The comparisons functions include \code{\link{contrast.wald}}, \code{\link{contrast.chr}}, \code{\link{contrast.ph}}, and \code{\link{contrast.logrank}}. \cr
+The comparisons functions include \code{\link{contrast_wald}}, \code{\link{contrast_chr}}, \code{\link{PHfit}}, \code{\link{contrast_ph}}, and \code{\link{contrast_logrank}}. \cr
 The functions for data simulation include \code{\link{simLDTdata}}, \code{\link{simWRSEdata}}, \code{\link{simPHdata}}, \code{\link{simCHRdata}}, and \code{\link{simLRdata}}. 
 }
 \details{
@@ -20,24 +20,25 @@ The function \code{\link{LDTestimate}} computes the estimates of the survival fu
 The function \code{\link{simWRSEdata}} generates data sets from sequentially randomized clinical trials as described in the simulation study of Guo and Tsiatis (2005). \cr
 The function \code{\link{WRSEestimate}} computes the weighted risk set estimator (WRSE) of the survival function and their estimated standard errors for DTRs at observed event times as proposed in Guo and Tsiatis (2002) Equation (3) and Equation (16). \cr
 
-The function \code{\link{contrast.wald}} compares the survival distributions of dynamic treatment regimes (DTRs) from sequentially randomized clinical trials based on the LDT estimator proposed in Lunceford, Davidian and Tsiatis (2002) or the WRSE estimator proposed in Guo and Tsiatis (2005) using the Wald-type tests. \cr
+The function \code{\link{contrast_wald}} compares the survival distributions of dynamic treatment regimes (DTRs) from sequentially randomized clinical trials based on the LDT estimator proposed in Lunceford, Davidian and Tsiatis (2002) or the WRSE estimator proposed in Guo and Tsiatis (2005) using the Wald-type tests. \cr
 
 The function \code{\link{simPHdata}} generates a data set from sequentially randomized clinical trials as described in the simulation study of Tang and Wahed (2011). \cr
-The function \code{\link{contrast.ph}} compares the survival distributions (i.e. hazard functions) of dynamic treatment regimes (DTRs) from sequentially randomized clinical trials after adjustment for covariates as proposed in Tang and Wahed (2011). \cr
+The function \code{\link{PHfit}} fits a generalized Cox model as proposed in Tang and Wahed (2011). \cr
+The function \code{\link{contrast_ph}} compares the survival distributions (i.e. hazard functions) of dynamic treatment regimes (DTRs) from sequentially randomized clinical trials after adjustment for covariates as proposed in Tang and Wahed (2011). \cr
 
 The function \code{\link{simCHRdata}} generates a data set from sequentially randomized clinical trials as described in the simulation study of Tang and Wahed (2013) [Epub ahead of print]. \cr
 The function \code{\link{CHRestimate}} computes the estimates for the cumulative hazard ratios (CHRs) between two different dynamic treatment regimes (DTRs) and their variance estimates at given time points as proposed in Tang and Wahed (2013) [Epub ahead of print]. \cr
-The function \code{\link{contrast.chr}} compares the cumulative hazard functions of dynamic treatment regimes (DTRs) from sequentially randomized clinical trials by calculating the natural logarithms of cumulative hazard ratios (CHRs) and performing the Wald-type tests based on natural logarithms of CHRs as proposed in Tang and Wahed (2013) [Epub ahead of print].\cr
+The function \code{\link{contrast_chr}} compares the cumulative hazard functions of dynamic treatment regimes (DTRs) from sequentially randomized clinical trials by calculating the natural logarithms of cumulative hazard ratios (CHRs) and performing the Wald-type tests based on natural logarithms of CHRs as proposed in Tang and Wahed (2013) [Epub ahead of print].\cr
 
 The function \code{\link{simLRdata}} generates a data set from sequentially randomized clinical trials as described in the simulation study of Kidwell and Wahed (2013). \cr
-The function \code{\link{contrast.logrank}} compares the survival distributions of dynamic treatment regimes (DTRs) from sequentially randomized clinical trials using the weighted logrank tests proposed in an unpublished 2005 PhD thesis from North Carolina State University by X. Guo, Feng and Wahed (2008), and Kidwell and Wahed (2013).
+The function \code{\link{contrast_logrank}} compares the survival distributions of dynamic treatment regimes (DTRs) from sequentially randomized clinical trials using the weighted logrank tests as proposed in Kidwell and Wahed (2013).
 
 
 \tabular{ll}{
 Package: \tab DTR\cr
 Type: \tab Package\cr
-Version: \tab 1.3 \cr
-Date: \tab 2014-02-28\cr
+Version: \tab 1.5 \cr
+Date: \tab 2014-07-08\cr
 License: \tab GPL (>=2)\cr
 }
 %%~~ An overview of how to use the package, including the most important functions ~~
@@ -64,7 +65,7 @@ Kidwell KM, Wahed AS: Weighted log-rank statistic to compare shared-path adaptiv
 Tang X, Wahed AS: Cumulative hazard ratio estimation for treatment regimes in sequentially randomized clinical trials. Statistics in Biosciences, 2013 [Epub ahead of print] \cr
 }
 \seealso{
-\code{\link{simLDTdata}}, \code{\link{LDTestimate}}, \code{\link{simWRSEdata}}, \code{\link{WRSEestimate}}, \code{\link{contrast.wald}}, \code{\link{simPHdata}}, \code{\link{contrast.ph}}, \code{\link{simCHRdata}}, \code{\link{CHRestimate}}, \code{\link{contrast.chr}}, \code{\link{simLRdata}}, \code{\link{contrast.logrank}}
+\code{\link{simLDTdata}}, \code{\link{LDTestimate}}, \code{\link{simWRSEdata}}, \code{\link{WRSEestimate}}, \code{\link{contrast_wald}}, \code{\link{simPHdata}}, \code{\link{PHfit}}, \code{\link{contrast_ph}}, \code{\link{simCHRdata}}, \code{\link{CHRestimate}}, \code{\link{contrast_chr}}, \code{\link{simLRdata}}, \code{\link{contrast_logrank}}
 }
 %%~~ Optionally other standard keywords, one per line, from file KEYWORDS in the R documentation directory ~~
 \keyword{survival analysis}

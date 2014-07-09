@@ -9,19 +9,23 @@ Function for calculating cumulative hazard ratio (CHR) estimates
 This function computes the estimates for the cumulative hazard ratios (CHRs) between two different dynamic treatment regimes (DTRs) and their variance estimates at observed event times as proposed in Tang and Wahed (2013) [Epub ahead of print].
 }
 \usage{
-CHRestimate(data)
+CHRestimate(data, covar=names(data)[!names(data) 
+\%in\% c("X", "R", "Z", "U", "delta")])
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{data}{
 %%     ~~Describe \code{fdata} here~~
-a data frame (X, R, Z, U, delta, V) representing the full data from a simple two stage randomization design with therapies A1 and A2 available at the first stage, and B1 and B2 available at the second stage. \cr
+a data frame (X, R, Z, U, delta, \ldots) representing the data from a two-stage randomization design with therapies A1 and A2 available at the first stage, and B1 and B2 available at the second stage. \cr
 X: first-stage indicator, X=0 if assigned to A1, and X=1 if assigned to A2 \cr
 R: response status, R=1 for responders, and R=0 for non-responders \cr
 Z: second-stage indicator, Z=0 if assigned to B1, and Z=1 if assigned to B2 \cr
 U: observed survival time, U is death time if delta=1, and U is censoring time if delta=0 \cr
 delta: censoring indicator, delta=1 for died, and delta=0 for censored \cr
-V: covariates to be adjusted. The function allows adjustment for one covariate or more than one covariates \cr
+\ldots: other variables \cr
+}
+  \item{covar}{
+covariate(s) to be adjusted. The default uses all the variables in the data other than X, R, Z, U and delta \cr  
 }
 }
 \details{
@@ -46,12 +50,9 @@ The function allows one covariate or more than one covariates, but does not allo
 \code{\link{summary.CHR}}, \code{\link{print.summary.CHR}}, \code{\link{plot.CHR}}
 }
 \examples{
-require(DTR)
-
-data("CHRdata")
-
 \dontrun{
-est <- CHRestimate(data=CHRdata)
+data("CHRdata")
+est <- CHRestimate(data=CHRdata, covar="V1")
 est}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

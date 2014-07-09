@@ -1,5 +1,5 @@
-\name{contrast.ph}
-\alias{contrast.ph}
+\name{contrast_ph}
+\alias{contrast_ph}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Function to compare dynamic treatment regimes (DTRs) after adjustment for covariates
@@ -8,7 +8,7 @@ Function to compare dynamic treatment regimes (DTRs) after adjustment for covari
 This function compares the survival distributions (i.e. hazard functions) of dynamic treatment regimes (DTRs) from sequentially randomized clinical trials after adjustment for covariates as proposed in Tang and Wahed (2011).
 }
 \usage{
-contrast.ph(fit)
+contrast_ph(fit)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -37,11 +37,10 @@ Tang X, Wahed AS: Comparison of treatment regimes with adjustment for auxiliary 
 \code{\link{PHfit}}, \code{\link{coxph.object}}
 }
 \examples{
-require(DTR)
-
+\dontrun{
 data("PHdata")
-f <- PHfit(data=PHdata)
-contrast.ph(f)
+f <- PHfit(data=PHdata, covar="V")
+contrast_ph(f)}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

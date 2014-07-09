@@ -26,11 +26,10 @@ The function returns an object of class \code{summary.DTR}. \cr
 \code{\link{print.summary.DTR}}, \code{\link{plot.DTR}} 
 }
 \examples{
-require(DTR)
-
+\dontrun{
 data("LDTdata")
 est <- LDTestimate(data=LDTdata)
-summary(est)
+summary(est)}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

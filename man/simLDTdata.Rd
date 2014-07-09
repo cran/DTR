@@ -80,8 +80,7 @@ Set a seed right before \code{\link{simLDTdata}} will help reproduce the same da
 \code{\link{LDTestimate}}
 }
 \examples{
-require(DTR)
-  
+ 
 #-------Example function usage-----------
 n <- 100
 L <- 1.5

@@ -11,7 +11,7 @@ Plot the survival estimates and their 95\% confidence bands for each dynamic tre
 \method{plot}{DTR}(x, confidence.interval = FALSE, 
 xlab = "Time", ylab = "Survival probability", 
 line.color = c("black", "grey40", "grey60", "grey80"), 
-legend.position = "right", ...)
+legend.position = "right", censored=FALSE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -33,17 +33,23 @@ colors for the lines. Default are "black", "grey40", "grey60", and "grey80" for 
 \item{legend.position}{
 the position of legend: "left", "right" (default), "bottom", "top", or two-element numeric vector (e.g. c(0.6,0.9)) 
 }
+\item{censored}{
+If censored=FALSE (default), the censoring ticks are not plotted. If censored=TRUE, the censoring times are plotted as ticks  
+}
 \item{\dots}{for future methods}
 }
 \seealso{
 \code{\link{DTR.object}}, \code{\link{print.DTR}}, \code{\link{summary.DTR}}, \code{\link{print.summary.DTR}}
 }
 \examples{
-require(DTR)
-
+\dontrun{
 data("LDTdata")
 est <- LDTestimate(data=LDTdata)
-plot(est, confidence.interval=TRUE)
+plot(est, confidence.interval=TRUE, censored=TRUE)
+
+data("WRSEdata")
+est <- WRSEestimate(data=WRSEdata)
+plot(est)}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

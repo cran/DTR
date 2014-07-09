@@ -39,11 +39,8 @@ the position of legend: "left", "right" (default), "bottom", "top", or two-eleme
 \code{\link{CHR.object}}, \code{\link{print.CHR}}, \code{\link{summary.CHR}}, \code{\link{print.summary.CHR}}
 }
 \examples{
-require(DTR)
-
-data("CHRdata")
-
 \dontrun{
+data("CHRdata")
 est <- CHRestimate(data=CHRdata)
 plot(est, confidence.interval=TRUE)
 plot(est, log.CHR=TRUE, confidence.interval=FALSE)}

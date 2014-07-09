@@ -1,20 +1,20 @@
-\name{contrast.logrank}
-\alias{contrast.logrank}
+\name{contrast_logrank}
+\alias{contrast_logrank}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Function to compare dynamic treatment regimes (DTRs) using weighted logrank tests
 }
 \description{
-This function compares the survival distributions of dynamic treatment regimes (DTRs) from sequentially randomized clinical trials using the weighted logrank tests proposed in an unpublished 2005 PhD thesis from North Carolina State University by X. Guo, Feng and Wahed (2008), and Kidwell and Wahed (2013). \cr
+This function compares the survival distributions of dynamic treatment regimes (DTRs) from sequentially randomized clinical trials using the weighted logrank tests proposed in Kidwell and Wahed (2013). \cr
 }
 \usage{
-contrast.logrank(data)
+contrast_logrank(data)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{data}{
 %%     ~~Describe \code{data} here~~
-a data frame (X, TR, R, Z, U, delta) representing the full data from a simple two stage randomization design with therapies A1 and A2 available at the first stage, and B1 and B2 available at the second stage. \cr
+a data frame (X, TR, R, Z, U, delta) representing the data from a two-stage randomization design with therapies A1 and A2 available at the first stage, and B1 and B2 available at the second stage. \cr
 X: first-stage indicator, X=0 if assigned to A1, and X=1 if assigned to A2 \cr
 TR: optional time to response for responders (R=1), only needed if method="WRSE" \cr
 R: response status, R=1 for responders, and R=0 for non-responders \cr
@@ -45,16 +45,15 @@ Kidwell KM, Wahed AS: Weighted log-rank statistic to compare shared-path adaptiv
 }
 \note{
 %%  ~~further notes~~
-The data frame generated from \code{\link{simLRdata}} is the same as the input data frame for \code{\link{contrast.logrank}}. \cr
+The data frame generated from \code{\link{simLRdata}} is the same as the input data frame for \code{\link{contrast_logrank}}. \cr
 }
 \seealso{
 \code{\link{simLRdata}}
 }
 \examples{
-require(DTR)
-
+\dontrun{
 data("LRdata")
-contrast.logrank(data=LRdata)
+contrast_logrank(data=LRdata)}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

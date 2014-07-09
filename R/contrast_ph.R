@@ -9,7 +9,7 @@ require(aod)
 ### code chunk number 2: chunkfunction
 ###################################################
 
-contrast.ph <- function(fit) {
+contrast_ph <- function(fit) {
   
   #Retrieve coefficient and variance estiamtes
   EST <- matrix(as.numeric(coef(fit)[1:5]), nrow=5, ncol=1)

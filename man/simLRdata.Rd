@@ -89,12 +89,10 @@ Kidwell KM, Wahed AS: Weighted log-rank statistic to compare shared-path. adapti
 Set a seed right before \code{\link{simLRdata}} will help reproduce the same data.\cr
 }
 \seealso{
-\code{\link{contrast.logrank}}
+\code{\link{contrast_logrank}}
 }
 \examples{
-
-require(DTR)
-  
+ 
 #-------Example function usage-----------
 n <- 100
 max.c <- 12 # 30\% censoring
