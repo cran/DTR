@@ -2,7 +2,18 @@ exportPattern("^[[:alpha:]]+")
 
 import(survival)
 import(ggplot2)
+import(grid)
 import(gridExtra)
 import(aod)
 import(proto)
+
+S3method(summary, DTR)
+S3method(print, DTR)
+S3method(print, summary.DTR)
+S3method(plot, DTR)
+
+S3method(summary, CHR)
+S3method(print, CHR)
+S3method(print, summary.CHR)
+S3method(plot, CHR)
 

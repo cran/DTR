@@ -68,3 +68,9 @@
     \item A bug in the function CHRestimate was fixed  
 }
 }
+\section{Changes in version 1.6}{
+  \itemize{
+    \item Add CITATION file from JSS  
+    \item Add reference to DTR-package.RD
+}
+}

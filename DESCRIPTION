@@ -1,19 +1,20 @@
 Package: DTR
-Version: 1.5
-Date: 2014-07-08
-Title: Estimation and comparison of dynamic treatment regimes
+Version: 1.6
+Date: 2015-05-05
+Title: Estimation and Comparison of Dynamic Treatment Regimes
 Authors@R: c(person("Xinyu", "Tang", role = c("aut", "cre"),
 	email = "xtang@uams.edu"),
 	person("Maria", "Melguizo", role = "aut",
 	email = "msmelguizo@uams.edu"))
-Depends: survival, ggplot2, gridExtra, aod, proto, R (>= 3.1.0)
-Description: Estimation and comparison of survival distributions of dynamic treatment regimes (DTRs) from sequentially randomized clinical trials
+Depends: R (>= 3.1.0)
+Imports: survival, ggplot2, grid, gridExtra, aod, proto
+Description: Estimation and comparison of survival distributions of dynamic treatment regimes (DTRs) from sequentially randomized clinical trials.
 License: GPL (>= 2)
 URL: http://CRAN.R-project.org/package=DTR
-Packaged: 2014-07-09 16:16:13 UTC; TangXinyu
+Packaged: 2015-05-06 15:00:56 UTC; TangXinyu
 Author: Xinyu Tang [aut, cre],
   Maria Melguizo [aut]
 Maintainer: Xinyu Tang <xtang@uams.edu>
 NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2014-07-09 23:49:03
+Date/Publication: 2015-05-06 17:22:22

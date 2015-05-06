@@ -1,0 +1,20 @@
+citHeader("To cite DTR in publications use:")
+
+citEntry(entry = "Article",
+  title        = "{DTR}: An {R} Package for Estimation and Comparison of Survival Outcomes of Dynamic Treatment Regimes",
+  author       = personList(as.person("Xinyu Tang"),
+                   as.person("Maria Melguizo")),
+  journal      = "Journal of Statistical Software",
+  year         = "2015",
+  volume       = "65",
+  number       = "7",
+  pages        = "1--28",
+  url          = "http://www.jstatsoft.org/v65/i07/",
+
+  textVersion  =
+  paste("Xinyu Tang, Maria Melguizo (2015).",
+        "DTR: An R Package for Estimation and Comparison of Survival Outcomes of Dynamic Treatment Regimes.",
+        "Journal of Statistical Software, 65(7), 1-28.",
+        "URL http://www.jstatsoft.org/v65/i07/.")
+)
+

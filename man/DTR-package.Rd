@@ -37,8 +37,8 @@ The function \code{\link{contrast_logrank}} compares the survival distributions 
 \tabular{ll}{
 Package: \tab DTR\cr
 Type: \tab Package\cr
-Version: \tab 1.5 \cr
-Date: \tab 2014-07-08\cr
+Version: \tab 1.6 \cr
+Date: \tab 2015-05-05\cr
 License: \tab GPL (>=2)\cr
 }
 %%~~ An overview of how to use the package, including the most important functions ~~
@@ -56,6 +56,7 @@ MSMelguizocastro@uams.edu
 
 }
 \references{
+Tang X, Melguizo M: DTR: An R Package for Estimation and Comparison of Survival Outcomes of Dynamic Treatment Regimes. Journal of Statistical Software 65(7):1-28 2005 http://www.jstatsoft.org/v65/i07/ \cr
 Lunceford JK, Davidian M, Tsiatis AA: Estimation of survival distributions of treatment policies in two-stage randomization designs in clinical trials. Biometrics 58:48-57, 2002 \cr
 Guo X: Statistical analysis in two-stage randomization designs in clinical trials. PhD thesis, Department of Statistics, North Carolina State University, 2005 \cr
 Guo X, Tsiatis AA: A weighted risk set estimator for survival distributions in two-stage randomization designs with censored survival data. Int. J. Biostatistics 1:1-15, 2005 \cr
