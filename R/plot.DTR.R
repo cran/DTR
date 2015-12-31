@@ -4,9 +4,6 @@
 
 #Libraries required
 require(ggplot2)
-require(grid)
-require(gridExtra)
-require(proto)
 
 ###################################################
 ### code chunk number 2: chunkfunction
@@ -15,58 +12,37 @@ require(proto)
 ###################
 # The functions: stairstepn, stat_stepribbon, and StatStepribbon were downloaded from:
 # https://groups.google.com/forum/?fromgroups=#!topic/ggplot2/9cFWHaH1CPs
+# Functions were revised for new version of ggplot2
 ###################
 
-# Modified version of ggplot:::stairstep function
-stairstepn <- function( data, direction="hv", yvars="y" ) {
-  direction <- match.arg( direction, c( "hv", "vh" ) )
-  data <- as.data.frame( data )[ order( data$x ), ]
-  n <- nrow( data )
-  
-  if ( direction == "vh" ) {
-    xs <- rep( 1:n, each = 2 )[ -2 * n ]
-    ys <- c( 1, rep( 2:n, each = 2 ) )
-  } else {
-    ys <- rep( 1:n, each = 2 )[ -2 * n ]
-    xs <- c( 1, rep( 2:n, each = 2))
-  }
-  
-  data.frame(
-    x = data$x[ xs ]
-    , data[ ys, yvars, drop=FALSE ]
-    , data[ xs, setdiff( names( data ), c( "x", yvars ) ), drop=FALSE ]
-  ) 
+StatStepribbon <- ggproto("StatStepribbon", Stat, 
+                          compute_group=function(., data, scales, direction = "hv", yvars = c( "ymin", "ymax" ), ...) {
+                            direction <- match.arg( direction, c( "hv", "vh" ) )
+                            data <- as.data.frame( data )[ order( data$x ), ]
+                            n <- nrow( data )
+                            
+                            if ( direction == "vh" ) {
+                              xs <- rep( 1:n, each = 2 )[ -2 * n ]
+                              ys <- c( 1, rep( 2:n, each = 2 ) )
+                            } else {
+                              ys <- rep( 1:n, each = 2 )[ -2 * n ]
+                              xs <- c( 1, rep( 2:n, each = 2))
+                            }
+                            
+                            data.frame(
+                              x = data$x[ xs ]
+                              , data[ ys, yvars, drop=FALSE ]
+                              , data[ xs, setdiff( names( data ), c( "x", yvars ) ), drop=FALSE ]
+                            ) 
+                          },
+                          required_aes=c( "x", "ymin", "ymax" ),
+                          default_geom=GeomRibbon,
+                          default_aes=aes( x=..x.., ymin = ..y.., ymax=Inf )
+)
+
+stat_stepribbon <- function( mapping=NULL, data=NULL, geom="ribbon", position="identity") {
+  layer(stat=StatStepribbon, mapping=mapping, data=data, geom=geom, position=position )
 }
-
-stat_stepribbon <- function( mapping=NULL, data=NULL, geom="ribbon", position="identity" ) {
-  StatStepribbon$new( mapping=mapping, data=data, geom=geom, position=position )
-}
-
-StatStepribbon <- proto(ggplot2:::Stat, {
-  objname <- "stepribbon"
-  desc <- "Stepwise area plot"
-  desc_outputs <- list(
-    x = "stepped independent variable",
-    ymin = "stepped minimum dependent variable",
-    ymax = "stepped maximum dependent variable"
-  )
-  required_aes <- c( "x", "ymin", "ymax" )
-  
-  default_geom <- function(.) GeomRibbon
-  default_aes <- function(.) aes( x=..x.., ymin = ..y.., ymax=Inf )
-  
-  calculate <- function( ., data, scales, direction = "hv", yvars = c( "ymin", "ymax" ), ...) {
-    stairstepn( data = data, direction = direction, yvars = yvars )
-  }
-  
-  examples <- function(.) {
-    DF <- data.frame( x = 1:3, ymin = runif( 3 ), ymax=rep( Inf, 3 ) )
-    ggplot( DF, aes( x=x, ymin=ymin, ymax=ymax ) ) + stat_stepribbon()
-    
-  }
-  
-})
-
 
 plot.DTR <- function(x, # A complete data frame representing the data for two-stage randomization designs
                     confidence.interval=FALSE, # Plot confidence intreval or not, default no confidence interval
@@ -135,7 +111,7 @@ plot.DTR <- function(x, # A complete data frame representing the data for two-st
     censorsurv <- x$censorsurv
     plot.censor <- data.frame(censorgroup, censortime, censorsurv)
     g <- g + geom_point(data=plot.censor, aes(x=censortime, y=censorsurv, col=censorgroup), shape="|", size=6,
-                        show_guide=FALSE)
+                        show.legend=FALSE)
   }
   
   #Plot the estimates from 0 to L without confidence interval

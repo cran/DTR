@@ -2,10 +2,8 @@ exportPattern("^[[:alpha:]]+")
 
 import(survival)
 import(ggplot2)
-import(grid)
-import(gridExtra)
 import(aod)
-import(proto)
+importFrom("stats", "pchisq", "pnorm", "quantile", "rbinom", "rexp", "rnorm", "runif")
 
 S3method(summary, DTR)
 S3method(print, DTR)

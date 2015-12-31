@@ -1,5 +1,5 @@
-daaed9ba349949ba8f6adf89889a443d *DESCRIPTION
-dfbd1097b7d19598d96ded5b86b3f7c5 *NAMESPACE
+96978154300b1b8c69400df83a5c4d17 *DESCRIPTION
+a9deac68df3164f8f658ed706915cf5d *NAMESPACE
 9de5c0c990c4c45ac88bea007b858832 *R/CHRestimate.R
 55d907d157fd1bd184ffbb51bba6ad16 *R/LDTestimate.R
 dc9c07ea8ae1e4fcb8231aaf94ee22d3 *R/PHfit.R
@@ -8,8 +8,8 @@ fd7ab5f627d56f644fc395969c73afab *R/WRSEestimate.R
 06cff400d911def04df6ea83d8ccd5fd *R/contrast_logrank.R
 79c8d21f83e1737b5e673f62770e0853 *R/contrast_ph.R
 c0e7923a194aae8de3171145906c9d83 *R/contrast_wald.R
-eb1027aa175600c14310f7e3e572a650 *R/plot.CHR.R
-b6f5dddcd6db4a300ae112a013052def *R/plot.DTR.R
+e22dbabc6b813822c976fb13a4f34ada *R/plot.CHR.R
+34614d1ad4168051a89e98ea110e31e2 *R/plot.DTR.R
 0a3406ba30c10b196e0af8d2747c3fa4 *R/print.CHR.R
 9956b53018c3904cdd7593be5424285f *R/print.DTR.R
 e4374f8f62a85f4901166a8b5951ef1d *R/print.summary.CHR.R
@@ -28,12 +28,12 @@ e42b98aae62d7e0e9081011a0ae07187 *data/CHRdata.RData
 eb31064080bb171a91b5d5bcef22b70a *data/WRSEdata.RData
 a7af74e8d01ee05dc3ba3af553ec3c30 *data/datalist
 a08457d2fcc86c2ac0facbbb525f4e00 *inst/CITATION
-74dbd5d8d924b6f84caa3ca6c945a794 *inst/NEWS.Rd
+0fc57319d01bf7d01f40701547656157 *inst/NEWS.Rd
 f2951b8ec4fe8a781ba91b269b200b7a *man/CHR.object.Rd
 0bd48c3b2bd0ee44990b8c606c023877 *man/CHRdata.Rd
 fd2fe00e42b532bd1fbd981f24d10522 *man/CHRestimate.Rd
-0131916c6ef8dbd39291fbac2152531c *man/DTR-internal.Rd
-7e3b341e6cb6d3896dad6e6b423ee21c *man/DTR-package.Rd
+36a15d2a22d52793a5382bd696fd56e9 *man/DTR-internal.Rd
+50a440c978186b685a40b10f319318f5 *man/DTR-package.Rd
 f979a3ebac4ee932f2be1b03ef7a8ed2 *man/DTR.object.Rd
 c24bd6d92b3d3d5ed784154e4eedb109 *man/LDTdata.Rd
 516a50a545e7c5d7b599dc331a2ddb8a *man/LDTestimate.Rd

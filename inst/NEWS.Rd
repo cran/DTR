@@ -74,3 +74,9 @@
     \item Add reference to DTR-package.RD
 }
 }
+\section{Changes in version 1.7}{
+  \itemize{
+    \item Delete internal function stairstepn
+    \item Internal functions stat_stepribbon and StatStepribbon were revised for newest version of ggplot2
+}
+}

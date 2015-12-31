@@ -37,8 +37,8 @@ The function \code{\link{contrast_logrank}} compares the survival distributions 
 \tabular{ll}{
 Package: \tab DTR\cr
 Type: \tab Package\cr
-Version: \tab 1.6 \cr
-Date: \tab 2015-05-05\cr
+Version: \tab 1.7 \cr
+Date: \tab 2015-12-25\cr
 License: \tab GPL (>=2)\cr
 }
 %%~~ An overview of how to use the package, including the most important functions ~~
